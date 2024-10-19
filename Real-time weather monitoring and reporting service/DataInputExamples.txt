@@ -1,0 +1,12 @@
+﻿**********************************JSON***********************************
+{"Location": "Jenin", "Temperature": 25.0, "Humidity": 100.0}
+------------------------------------------------------------------
+{"Location": "Nablus", "Temperature": -10.0, "Humidity": 40.0}
+------------------------------------------------------------------
+{"Location": "Ramallah", "Temperature": 30.0, "Humidity": 120.0}
+**********************************XML***********************************
+<WeatherData><Location>Jenin</Location><Temperature>25.0</Temperature><Humidity>100.0</Humidity></WeatherData>
+------------------------------------------------------------------
+<WeatherData><Location>Nablus</Location><Temperature>-10.0</Temperature><Humidity>40.0</Humidity></WeatherData>
+------------------------------------------------------------------
+<WeatherData><Location>Ramallah</Location><Temperature>30.0</Temperature><Humidity>120.0</Humidity></WeatherData>
