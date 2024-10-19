@@ -1,5 +1,5 @@
 ﻿╔═══════════════════════ JSON: Weather Data ═══════════════════════╗
-║ {"Location": "Jenin", "Temperature": 25.0, "Humidity": 100.0}    ║
+║ {"Location": "Jenin", "Temperature": -25.0, "Humidity": 100.0}   ║
 ╠──────────────────────────────────────────────────────────────────╣
 ║ {"Location": "Nablus", "Temperature": -10.0, "Humidity": 40.0}   ║
 ║																   ║
