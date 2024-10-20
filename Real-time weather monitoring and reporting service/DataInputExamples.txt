@@ -10,7 +10,7 @@
 
 ╔═══════════════════════════════════════════════ XML: Weather Data ═══════════════════════════════════════════════╗
 ║																												  ║
-║<WeatherData><Location>Jenin</Location><Temperature>25.0</Temperature><Humidity>100.0</Humidity></WeatherData>   ║
+║<WeatherData><Location>Jenin</Location><Temperature>-25.0</Temperature><Humidity>100.0</Humidity></WeatherData>  ║
 ║																												  ║
 ╠─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╣
 ║																											      ║

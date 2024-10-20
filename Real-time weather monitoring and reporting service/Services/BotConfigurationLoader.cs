@@ -14,7 +14,7 @@ namespace Real_time_weather_monitoring_and_reporting_service.Services
 
                 var options = new JsonSerializerOptions
                 {
-                    PropertyNameCaseInsensitive = true 
+                    PropertyNameCaseInsensitive = true
                 };
 
                 BotsConfig config = JsonSerializer.Deserialize<BotsConfig>(jsonContent, options);

@@ -4,25 +4,34 @@ using Real_time_weather_monitoring_and_reporting_service.Services;
 
 namespace Real_time_weather_monitoring_and_reporting_service.Utilities
 {
-    internal class InputHandling
+    public class InputHandling
     {
-        public void TakeBotConfiguration(string configPath)
+        private WeatherService _weatherService;
+        private String _configPath;
+        public InputHandling(string configPath) 
         {
-            WeatherService weatherService = new WeatherService(configPath);
-            DisplayUserInput(weatherService);
+            _configPath = configPath;
+            _weatherService = new WeatherService(_configPath);
         }
-        private void DisplayUserInput (WeatherService weatherService)
+        public void TakeBotConfiguration()
+        {
+            DisplayUserInput(_weatherService);
+        }
+        private void DisplayUserInput(WeatherService weatherService)
         {
             while (true)
             {
                 Console.WriteLine($"\nEnter weather data('--abort' to exit):\n");
                 string inputData = Console.ReadLine();
                 if (inputData.Equals("--abort")) break;
+
                 IWeatherDataParser parser = inputData.TrimStart().StartsWith("{")
                     ? new JsonWeatherDataParser()
                     : new XmlWeatherDataParser();
+
                 weatherService.ProcessWeatherData(inputData, parser);
             }
         }
+        public WeatherService GetWeatherService() => _weatherService;
     }
 }

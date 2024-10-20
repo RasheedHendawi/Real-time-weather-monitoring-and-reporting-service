@@ -5,12 +5,12 @@ namespace Real_time_weather_monitoring_and_reporting_service.Model
 {
     public class WeatherData
     {
-        public string Location { get; set; }
+        public string Location { get; set; } = string.Empty;
         public double Temperature { get; set; }
         public double Humidity { get; set; }
 
-        private readonly List<IBot> _observers = new List<IBot>();
-
+        private readonly List<IBot> _observers = new();
+        private List<IBot> _testObserver = new();
         public void RegisterObserver(IBot bot)
         {
             _observers.Add(bot);
@@ -30,6 +30,7 @@ namespace Real_time_weather_monitoring_and_reporting_service.Model
                 if (observer.Activate(this))
                 {
                     anyBotActivated = true;
+                    _testObserver.Add(observer);
                 }
             }
 
@@ -47,5 +48,6 @@ namespace Real_time_weather_monitoring_and_reporting_service.Model
 
             NotifyObservers();
         }
+        public IEnumerable<IBot> GetActiveBots() => _testObserver;
     }
 }

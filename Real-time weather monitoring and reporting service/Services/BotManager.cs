@@ -30,7 +30,6 @@ namespace Real_time_weather_monitoring_and_reporting_service.Services
                 _bots.Add(new SnowBot(tempBot));
             }
         }
-
         public IEnumerable<IBot> GetBots() => _bots;
     }
 }

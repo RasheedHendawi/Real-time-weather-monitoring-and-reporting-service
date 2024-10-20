@@ -27,6 +27,8 @@ namespace Real_time_weather_monitoring_and_reporting_service.Services
             WeatherData weatherData = parser.Parse(inputData);
             _weatherData.SetWeatherData(weatherData.Location, weatherData.Temperature, weatherData.Humidity);
         }
+        public WeatherData GetWeatherData() => _weatherData;
+        public BotManager GetBotManager() => _botManager;
     }
 
 }
