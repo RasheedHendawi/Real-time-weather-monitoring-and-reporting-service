@@ -1,38 +1,44 @@
-name: build and test
+name: Build and Test
 
 on:
   push:
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
     paths:
       - '**/*.cs'
       - '**/*.csproj'
 
 env:
-  DOTNET_VERSION: '6.0.x' # The .NET SDK version to use
+  DOTNET_VERSION: '6.0.x'
 
 jobs:
   build-and-test:
-    name: build-and-test-${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-      - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+    - name: List files for debugging
+      run: ls -R # Ensure all files are present
 
-      - name: Install dependencies
-        run: dotnet restore
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Build
-        run: dotnet build --configuration Release --no-restore
+    - name: Install Dependencies (Main Project)
+      working-directory: 'Real-time weather monitoring and reporting service'
+      run: dotnet restore
 
-      - name: Test
-        run: dotnet test --no-restore --verbosity normal
+    - name: Build Project
+      working-directory: 'Real-time weather monitoring and reporting service'
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Run Tests
+      working-directory: 'WeatherMonitoring.Tests'
+      run: dotnet test --no-restore --verbosity normal
