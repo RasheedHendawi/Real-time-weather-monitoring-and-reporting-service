@@ -39,3 +39,4 @@ cd real-time-weather-monitoring
 dotnet run
 ```
 And just enter the city after city information to activate the `Bots`.
+[![Build and Test](https://github.com/RasheedHendawi/Real-time-weather-monitoring-and-reporting-service/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/RasheedHendawi/Real-time-weather-monitoring-and-reporting-service/actions/workflows/build-and-test.yml)
