@@ -3,14 +3,11 @@ using Real_time_weather_monitoring_and_reporting_service.Model;
 
 namespace Real_time_weather_monitoring_and_reporting_service.Bots
 {
-    public class SunBot : IBot
+    public class SunBot(Bot config) : IBot
     {
-        private readonly BotConfig _config;
+        private readonly Bot _config = config;
 
-        public SunBot(BotConfig config)
-        {
-            _config = config;
-        }
+
         public bool Activate(WeatherData weatherData)
         {
             if (_config.Enabled && weatherData.Temperature > _config.TemperatureThreshold)

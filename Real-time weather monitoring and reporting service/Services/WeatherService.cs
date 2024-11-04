@@ -1,4 +1,5 @@
-﻿using Real_time_weather_monitoring_and_reporting_service.Interfaces;
+﻿using Microsoft.Extensions.Configuration;
+using Real_time_weather_monitoring_and_reporting_service.Interfaces;
 using Real_time_weather_monitoring_and_reporting_service.Model;
 
 namespace Real_time_weather_monitoring_and_reporting_service.Services
@@ -8,27 +9,34 @@ namespace Real_time_weather_monitoring_and_reporting_service.Services
         private readonly WeatherData _weatherData;
         private readonly BotManager _botManager;
 
-        public WeatherService(string configFilePath)
+        public WeatherService(IConfiguration configuration)
         {
-            var configLoader = new BotConfigurationLoader();
-            var botsConfig = configLoader.LoadConfig(configFilePath);
-
-            _botManager = new BotManager(botsConfig);
-            _weatherData = new WeatherData();
-
-            foreach (var bot in _botManager.GetBots())
+            var botConfig = configuration.GetSection("BotsConfig").Get<BotConfig>();
+            if (botConfig != null)
             {
-                _weatherData.RegisterObserver(bot);
+                _botManager = new BotManager(botConfig);
+                _weatherData = new WeatherData();
+
+                foreach (var bot in _botManager.GetBots())
+                {
+                    _weatherData.RegisterObserver(bot);
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("Bot configurations are missing or invalid. Please check your configuration file.");
             }
         }
 
         public void ProcessWeatherData(string inputData, IWeatherDataParser parser)
         {
             WeatherData weatherData = parser.Parse(inputData);
+            if (weatherData == null)
+            {
+                Console.WriteLine("Failed to parse weather data. Please check the input format.");
+                return;
+            }
             _weatherData.SetWeatherData(weatherData.Location, weatherData.Temperature, weatherData.Humidity);
         }
-        public WeatherData GetWeatherData() => _weatherData;
-        public BotManager GetBotManager() => _botManager;
     }
-
 }

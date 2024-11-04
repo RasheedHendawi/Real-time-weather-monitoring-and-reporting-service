@@ -3,14 +3,9 @@ using Real_time_weather_monitoring_and_reporting_service.Model;
 
 namespace Real_time_weather_monitoring_and_reporting_service.Bots
 {
-    public class SnowBot : IBot
+    public class SnowBot(Bot config) : IBot
     {
-        private readonly BotConfig _config;
-
-        public SnowBot(BotConfig config)
-        {
-            _config = config;
-        }
+        private readonly Bot _config = config;
 
         public bool Activate(WeatherData weatherData)
         {

@@ -1,4 +1,5 @@
-﻿using Real_time_weather_monitoring_and_reporting_service.Utilities;
+﻿using Microsoft.Extensions.Configuration;
+using Real_time_weather_monitoring_and_reporting_service.Utilities;
 
 namespace Real_time_weather_monitoring_and_reporting_service
 {
@@ -6,10 +7,12 @@ namespace Real_time_weather_monitoring_and_reporting_service
     {
         public static void Main(string[] args)
         {
-            string configPath = "AppConfigSetting.json";
-            InputHandling inputHandling = new InputHandling(configPath);
-            inputHandling.TakeBotConfiguration();
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
+            InputHandling inputHandling = new(configuration);
+            inputHandling.DisplayUserInput();
         }
     }
-
 }

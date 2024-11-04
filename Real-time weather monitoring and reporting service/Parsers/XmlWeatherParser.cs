@@ -6,12 +6,18 @@ namespace Real_time_weather_monitoring_and_reporting_service.Parsers
 {
     public class XmlWeatherDataParser : IWeatherDataParser
     {
-        public WeatherData Parse(string data)
+        public WeatherData? Parse(string data)
         {
-            var serializer = new XmlSerializer(typeof(WeatherData));
-            using (var reader = new StringReader(data))
+            try
             {
-                return (WeatherData)serializer.Deserialize(reader);
+                var serializer = new XmlSerializer(typeof(WeatherData));
+                using var reader = new StringReader(data);
+                return serializer.Deserialize(reader) as WeatherData;
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine($"XML Parsing Error: {ex.Message}");
+                return null;
             }
         }
     }

@@ -5,31 +5,34 @@ using Real_time_weather_monitoring_and_reporting_service.Model;
 
 namespace Real_time_weather_monitoring_and_reporting_service.Services
 {
-    public class BotManager
+public class BotManager
+{
+    private readonly List<IBot> _bots;
+
+    public BotManager(BotConfig? config)
     {
-        private readonly List<IBot> _bots;
+        ArgumentNullException.ThrowIfNull(config);
 
-        public BotManager(BotsConfig config)
+        _bots = [];
+        var botConfigs = new List<(Bot? Config, Func<Bot, IBot> CreateBot)>
         {
-            _bots = new List<IBot>();
-            BotConfig tempBot;
-            if (config.RainBot.Enabled)
-            {
-                tempBot = config.RainBot;
-                _bots.Add(new RainBot(tempBot));
-            }
-            if (config.SunBot.Enabled)
-            {
-                tempBot = config.SunBot;
-                _bots.Add(new SunBot(tempBot));
-            }
+            (config.RainBot, tmp => new RainBot(tmp)),
 
-            if (config.SnowBot.Enabled)
+            (config.SunBot, tmp => new SunBot(tmp)),
+
+            (config.SnowBot, tmp => new SnowBot(tmp))
+        };
+
+        foreach (var (bot, createBot) in botConfigs)
+        {
+            if (bot != null && bot.Enabled)
             {
-                tempBot = config.SnowBot;
-                _bots.Add(new SnowBot(tempBot));
+                _bots.Add(createBot(bot));
             }
         }
-        public IEnumerable<IBot> GetBots() => _bots;
     }
+
+    public IEnumerable<IBot> GetBots() => _bots;
+}
+
 }
