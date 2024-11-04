@@ -9,7 +9,7 @@ namespace WeatherMonitoring.Tests.Services
         [Fact]
         public void BotManager_ShouldCreateEnabledBots()
         {
-            var botsConfig = new BotConfig
+            var botsConfig = new BotsConfig
             {
                 RainBot = new Bot
                 {
@@ -42,7 +42,7 @@ namespace WeatherMonitoring.Tests.Services
         [Fact]
         public void BotManager_ShouldNotCreateBots_WhenAllDisabled()
         {
-            var botsConfig = new BotConfig
+            var botsConfig = new BotsConfig
             {
                 RainBot = new Bot
                 {
@@ -72,7 +72,7 @@ namespace WeatherMonitoring.Tests.Services
         [Fact]
         public void BotManager_ShouldHandleNullBotConfigurations()
         {
-            var botsConfig = new BotConfig
+            var botsConfig = new BotsConfig
             {
                 RainBot = null,
                 SunBot = new Bot

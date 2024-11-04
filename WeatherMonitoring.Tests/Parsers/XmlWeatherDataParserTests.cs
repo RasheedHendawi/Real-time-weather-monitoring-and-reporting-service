@@ -1,5 +1,7 @@
 ﻿
 using Real_time_weather_monitoring_and_reporting_service.Parsers;
+using Real_time_weather_monitoring_and_reporting_service.Services;
+using System.Configuration;
 
 namespace WeatherMonitoring.Tests.Parsers
 {
@@ -25,7 +27,7 @@ namespace WeatherMonitoring.Tests.Parsers
         }
 
         [Fact]
-        public void Parse_ShouldReturnNull_WhenInputIsInvalidXml()
+        public void Parse_ShouldThrowException_WhenInputIsInvalidXml()
         {
             var parser = new XmlWeatherDataParser();
             string inputData = "<InvalidXml>";
@@ -36,12 +38,10 @@ namespace WeatherMonitoring.Tests.Parsers
 
             try
             {
-                var result = parser.Parse(inputData);
+                var exception = Record.Exception(() => parser.Parse(inputData));
 
-                Assert.Null(result);
-
-                var output = stringWriter.ToString();
-                Assert.Contains("XML Parsing Error:", output);
+                Assert.NotNull(exception);
+                //Assert.IsType<Exception>(exception);
             }
             finally
             {

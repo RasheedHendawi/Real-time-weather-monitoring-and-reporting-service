@@ -6,16 +6,24 @@ namespace Real_time_weather_monitoring_and_reporting_service.Parsers
 {
     public class JsonWeatherDataParser : IWeatherDataParser
     {
-        public WeatherData? Parse(string data)
+        public WeatherData Parse(string data)
         {
             try
             {
-                return JsonSerializer.Deserialize<WeatherData>(data);
+                var js = JsonSerializer.Deserialize<WeatherData>(data);
+                if (js != null)
+                {
+                    return js;
+                }
+                else
+                {
+                    throw new Exception("null retrun json");
+                }
             }
-            catch (JsonException ex)
+            catch (Exception ex)
             {
                 Console.WriteLine($"JSON PARSING ERROR: {ex.Message}");
-                return null;
+                throw new Exception(ex.Message);
             }
         }
     }

@@ -20,14 +20,15 @@ namespace WeatherMonitoring.Tests.Parsers
         }
 
         [Fact]
-        public void Parse_ShouldReturnNull_WhenInputIsInvalidJson()
+        public void Parse_ThrowException_WhenInputIsInvalidJson()
         {
             var parser = new JsonWeatherDataParser();
             string inputData = "{Invalid Json}";
 
-            var result = parser.Parse(inputData);
+            var exception = Record.Exception(() => parser.Parse(inputData));
 
-            Assert.Null(result);
+            Assert.NotNull(exception);
+            //Assert.IsAssignableFrom<Exception>(exception); 
         }
     }
 }
